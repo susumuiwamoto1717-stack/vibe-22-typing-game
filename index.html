@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Typing Practice</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header id="header">
+    <h1>Code Typing Practice</h1>
+    <div class="header-controls">
+      <select id="keyboard-select" title="キーボードレイアウト">
+        <option value="US">US</option>
+        <option value="JIS">JIS</option>
+      </select>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== 画面1: モード選択画面 ===== -->
+    <div id="screen-select" class="screen active">
+      <div class="select-container">
+        <h2 class="select-title">練習モードを選択</h2>
+        <div class="mode-grid">
+          <button class="mode-btn" data-mode="symbols">
+            <span class="mode-icon">{ }</span>
+            <span class="mode-name">記号特訓</span>
+            <span class="mode-desc">コーディング頻出記号を集中練習</span>
+          </button>
+          <button class="mode-btn" data-mode="html_css">
+            <span class="mode-icon">&lt;/&gt;</span>
+            <span class="mode-name">HTML / CSS</span>
+            <span class="mode-desc">タグとCSSプロパティの練習</span>
+          </button>
+          <button class="mode-btn" data-mode="javascript">
+            <span class="mode-icon">JS</span>
+            <span class="mode-name">JavaScript</span>
+            <span class="mode-desc">JS構文・関数・配列操作</span>
+          </button>
+          <button class="mode-btn" data-mode="ruby">
+            <span class="mode-icon">Rb</span>
+            <span class="mode-name">Ruby</span>
+            <span class="mode-desc">Ruby / Rails構文の練習</span>
+          </button>
+          <button class="mode-btn" data-mode="mix">
+            <span class="mode-icon">MIX</span>
+            <span class="mode-name">ミックス</span>
+            <span class="mode-desc">全言語からランダム出題</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 画面2: 待機画面（スペースで開始） ===== -->
+    <div id="screen-ready" class="screen">
+      <div class="ready-container">
+        <div class="ready-mode-name" id="ready-mode-name"></div>
+        <div class="ready-message">スペースキーで開始</div>
+        <div class="ready-sub">終了は Esc キーです</div>
+        <div id="keyboard-ready" class="keyboard-wrapper"></div>
+      </div>
+    </div>
+
+    <!-- ===== 画面3: タイピング中 ===== -->
+    <div id="screen-typing" class="screen">
+      <!-- ステータスバー -->
+      <div class="status-bar">
+        <div class="status-item">
+          <span class="status-label">タイマー</span>
+          <span class="status-value" id="timer">00:00</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">問題</span>
+          <span class="status-value" id="question-count">1 / 10</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">WPM</span>
+          <span class="status-value" id="wpm">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">正確率</span>
+          <span class="status-value" id="accuracy">100%</span>
+        </div>
+      </div>
+
+      <!-- 記号ガイド（上段） -->
+      <div class="symbol-guide" id="symbol-guide">
+        <div class="symbol-char" id="guide-char"></div>
+        <div class="symbol-name" id="guide-name"></div>
+        <div class="symbol-usage" id="guide-usage"></div>
+      </div>
+
+      <!-- ヒント表示 -->
+      <div class="typing-hint" id="typing-hint"></div>
+
+      <!-- タイピングエリア（下段） -->
+      <div class="typing-area">
+        <div class="typing-text" id="typing-text"></div>
+      </div>
+
+      <!-- 指ガイド -->
+      <div class="finger-guide" id="finger-guide">
+        <span id="finger-hand"></span> <span id="finger-name"></span>
+      </div>
+
+      <!-- キーボード -->
+      <div id="keyboard-typing" class="keyboard-wrapper"></div>
+
+      <!-- 手のイラスト -->
+      <div id="hand-guide-typing"></div>
+    </div>
+
+    <!-- ===== 画面4: 結果画面 ===== -->
+    <div id="screen-result" class="screen">
+      <div class="result-container">
+        <h2 class="result-title">結果</h2>
+        <div class="result-level" id="result-level"></div>
+        <div class="result-score" id="result-score"></div>
+        <div class="result-stats">
+          <div class="result-stat">
+            <span class="result-stat-label">WPM</span>
+            <span class="result-stat-value" id="result-wpm">0</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">正確率</span>
+            <span class="result-stat-value" id="result-accuracy">0%</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">時間</span>
+            <span class="result-stat-value" id="result-time">00:00</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">入力文字数</span>
+            <span class="result-stat-value" id="result-chars">0</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">ミス数</span>
+            <span class="result-stat-value" id="result-miss">0</span>
+          </div>
+        </div>
+        <div class="result-miss-chars" id="result-miss-chars">
+          <h3>ミスした文字</h3>
+          <div id="miss-char-list"></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="btn-retry">もう一度</button>
+          <button class="btn btn-secondary" id="btn-back">モード選択に戻る</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/symbols.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/hands.js"></script>
+  <script src="js/snippets.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
