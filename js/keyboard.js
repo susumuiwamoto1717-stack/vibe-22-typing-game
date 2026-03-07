@@ -76,11 +76,10 @@ const US_LAYOUT = {
   ]
 };
 
-// JISキーボードレイアウト定義
+// JISキーボードレイアウト定義（Mac JIS配列）
 const JIS_LAYOUT = {
   rows: [
     [
-      { key: 'Backquote', label: '半/全', shiftLabel: '', width: 1 },
       { key: 'Digit1', label: '1', shiftLabel: '!', width: 1 },
       { key: 'Digit2', label: '2', shiftLabel: '"', width: 1 },
       { key: 'Digit3', label: '3', shiftLabel: '#', width: 1 },
@@ -94,10 +93,10 @@ const JIS_LAYOUT = {
       { key: 'Minus', label: '-', shiftLabel: '=', width: 1 },
       { key: 'Equal', label: '^', shiftLabel: '~', width: 1 },
       { key: 'IntlYen', label: '¥', shiftLabel: '|', width: 1 },
-      { key: 'Backspace', label: 'BS', shiftLabel: '', width: 1 }
+      { key: 'Backspace', label: 'delete', shiftLabel: '', width: 2 }
     ],
     [
-      { key: 'Tab', label: 'Tab', shiftLabel: '', width: 1.5 },
+      { key: 'Tab', label: 'tab', shiftLabel: '', width: 1.5 },
       { key: 'KeyQ', label: 'Q', shiftLabel: '', width: 1 },
       { key: 'KeyW', label: 'W', shiftLabel: '', width: 1 },
       { key: 'KeyE', label: 'E', shiftLabel: '', width: 1 },
@@ -110,10 +109,10 @@ const JIS_LAYOUT = {
       { key: 'KeyP', label: 'P', shiftLabel: '', width: 1 },
       { key: 'BracketLeft', label: '@', shiftLabel: '`', width: 1 },
       { key: 'BracketRight', label: '[', shiftLabel: '{', width: 1 },
-      { key: 'Enter', label: 'Enter', shiftLabel: '', width: 1.5, rowSpan: true }
+      { key: 'Enter', label: 'return', shiftLabel: '', width: 1.5, rowSpan: true }
     ],
     [
-      { key: 'CapsLock', label: 'Caps', shiftLabel: '', width: 1.75 },
+      { key: 'CapsLock', label: 'control', shiftLabel: '', width: 1.75 },
       { key: 'KeyA', label: 'A', shiftLabel: '', width: 1 },
       { key: 'KeyS', label: 'S', shiftLabel: '', width: 1 },
       { key: 'KeyD', label: 'D', shiftLabel: '', width: 1 },
@@ -128,7 +127,7 @@ const JIS_LAYOUT = {
       { key: 'Backslash', label: ']', shiftLabel: '}', width: 1 }
     ],
     [
-      { key: 'ShiftLeft', label: 'Shift', shiftLabel: '', width: 2.25 },
+      { key: 'ShiftLeft', label: '⇧', shiftLabel: '', width: 2.25 },
       { key: 'KeyZ', label: 'Z', shiftLabel: '', width: 1 },
       { key: 'KeyX', label: 'X', shiftLabel: '', width: 1 },
       { key: 'KeyC', label: 'C', shiftLabel: '', width: 1 },
@@ -140,16 +139,18 @@ const JIS_LAYOUT = {
       { key: 'Period', label: '.', shiftLabel: '>', width: 1 },
       { key: 'Slash', label: '/', shiftLabel: '?', width: 1 },
       { key: 'IntlRo', label: '\\', shiftLabel: '_', width: 1 },
-      { key: 'ShiftRight', label: 'Shift', shiftLabel: '', width: 1.75 }
+      { key: 'ShiftRight', label: '⇧', shiftLabel: '', width: 1.75 }
     ],
     [
-      { key: 'ControlLeft', label: 'Ctrl', shiftLabel: '', width: 1.5 },
-      { key: 'AltLeft', label: 'Alt', shiftLabel: '', width: 1.25 },
-      { key: 'MetaLeft', label: 'Cmd', shiftLabel: '', width: 1.25 },
-      { key: 'Space', label: '', shiftLabel: '', width: 5 },
-      { key: 'MetaRight', label: 'Cmd', shiftLabel: '', width: 1.25 },
-      { key: 'AltRight', label: 'Alt', shiftLabel: '', width: 1.25 },
-      { key: 'ControlRight', label: 'Ctrl', shiftLabel: '', width: 1.5 }
+      { key: 'Fn', label: 'fn', shiftLabel: '', width: 1 },
+      { key: 'ControlLeft', label: '⌃', shiftLabel: '', width: 1.25 },
+      { key: 'AltLeft', label: '⌥', shiftLabel: '', width: 1.25 },
+      { key: 'MetaLeft', label: '⌘', shiftLabel: '', width: 1.5 },
+      { key: 'Lang2', label: '英数', shiftLabel: '', width: 1.5 },
+      { key: 'Space', label: '', shiftLabel: '', width: 3.5 },
+      { key: 'Lang1', label: 'かな', shiftLabel: '', width: 1.5 },
+      { key: 'MetaRight', label: '⌘', shiftLabel: '', width: 1.5 },
+      { key: 'AltRight', label: '⌥', shiftLabel: '', width: 1.25 }
     ]
   ]
 };
@@ -256,7 +257,7 @@ class KeyboardRenderer {
         if (keyDef.key === 'Space') {
           keyEl.classList.add('key-space');
         }
-        if (['Backspace', 'Tab', 'CapsLock', 'Enter', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight'].includes(keyDef.key)) {
+        if (['Backspace', 'Tab', 'CapsLock', 'Enter', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight', 'Fn', 'Lang1', 'Lang2'].includes(keyDef.key)) {
           keyEl.classList.add('key-special');
         }
 
@@ -400,10 +401,13 @@ const FINGER_MAP = {
   'IntlRo':       { finger: 7, hand: '右手', name: '小指', cls: 'finger-r-pinky' },
   'ShiftRight':   { finger: 7, hand: '右手', name: '小指', cls: 'finger-r-pinky' },
   // 最下段
+  'Fn':           { finger: 0, hand: '左手', name: '小指', cls: 'finger-l-pinky' },
   'ControlLeft':  { finger: 0, hand: '左手', name: '小指', cls: 'finger-l-pinky' },
   'AltLeft':      { finger: 0, hand: '左手', name: '小指', cls: 'finger-l-pinky' },
   'MetaLeft':     { finger: 0, hand: '左手', name: '親指', cls: 'finger-thumb' },
+  'Lang2':        { finger: 8, hand: '左手', name: '親指', cls: 'finger-thumb' },
   'Space':        { finger: 8, hand: '', name: '親指', cls: 'finger-thumb' },
+  'Lang1':        { finger: 8, hand: '右手', name: '親指', cls: 'finger-thumb' },
   'MetaRight':    { finger: 7, hand: '右手', name: '親指', cls: 'finger-thumb' },
   'AltRight':     { finger: 7, hand: '右手', name: '小指', cls: 'finger-r-pinky' },
   'ControlRight': { finger: 7, hand: '右手', name: '小指', cls: 'finger-r-pinky' }
