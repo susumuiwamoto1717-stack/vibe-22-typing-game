@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Typing Practice</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Code Typing Practice - Volume Mount Test</title>
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
   <!-- ヘッダー -->
@@ -43,6 +43,11 @@
             <span class="mode-icon">Rb</span>
             <span class="mode-name">Ruby</span>
             <span class="mode-desc">Ruby / Rails構文の練習</span>
+          </button>
+          <button class="mode-btn rl-mode-btn" id="btn-ruby-learning">
+            <span class="mode-icon rl-icon">RUNTEQ</span>
+            <span class="mode-name">Ruby入門学習</span>
+            <span class="mode-desc">全11章・92ステップの学習モード</span>
           </button>
           <button class="mode-btn" data-mode="mix">
             <span class="mode-icon">MIX</span>
@@ -112,6 +117,158 @@
       <div id="hand-guide-typing"></div>
     </div>
 
+    <!-- ===== RUNTEQ Ruby学習モード ===== -->
+
+    <!-- RL画面1: パスワード入力 -->
+    <div id="screen-ruby-password" class="screen">
+      <div class="rl-password-container">
+        <div class="rl-logo">RUNTEQ</div>
+        <h2>Ruby入門 学習モード</h2>
+        <p class="rl-password-desc">RUNTEQ生徒専用です。パスワードを入力してください。</p>
+        <div class="rl-password-form">
+          <input type="password" id="ruby-password-input" class="rl-password-input" placeholder="パスワード">
+          <span id="ruby-password-error" class="rl-password-error"></span>
+          <button id="ruby-password-submit" class="btn btn-primary rl-btn">ログイン</button>
+          <button id="ruby-password-back" class="btn btn-secondary rl-btn">戻る</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RL画面2: 章選択 -->
+    <div id="screen-ruby-chapters" class="screen">
+      <div class="rl-chapters-container">
+        <h2 class="rl-section-title">RUNTEQ Ruby入門</h2>
+        <p class="rl-section-desc">学習する章を選択してください</p>
+        <div id="ruby-chapter-list" class="rl-chapter-list"></div>
+        <button id="ruby-chapter-back" class="btn btn-secondary rl-btn-back">モード選択に戻る</button>
+      </div>
+    </div>
+
+    <!-- RL画面3: ステップ選択 -->
+    <div id="screen-ruby-steps" class="screen">
+      <div class="rl-steps-container">
+        <h2 id="ruby-step-title" class="rl-section-title"></h2>
+        <div id="ruby-step-list" class="rl-step-list"></div>
+        <button id="ruby-step-back" class="btn btn-secondary rl-btn-back">章選択に戻る</button>
+      </div>
+    </div>
+
+    <!-- RL画面4: タイピング中 -->
+    <div id="screen-ruby-typing" class="screen">
+      <div class="rl-typing-container">
+        <!-- ステータスバー -->
+        <div class="rl-status-bar">
+          <div class="status-item">
+            <span class="status-label">タイマー</span>
+            <span class="status-value" id="rl-timer">00:00</span>
+          </div>
+          <div class="status-item" id="rl-step-info-wrap">
+            <span class="status-value" id="rl-step-info"></span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">WPM</span>
+            <span class="status-value" id="rl-wpm">0</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">正確率</span>
+            <span class="status-value" id="rl-accuracy">100%</span>
+          </div>
+        </div>
+
+        <!-- 解説エリア -->
+        <div class="rl-explanation-bar">
+          <span id="rl-explanation"></span>
+        </div>
+
+        <!-- コードエリア -->
+        <div class="rl-code-area" id="rl-code-area">
+          <div class="rl-line-numbers" id="rl-line-numbers"></div>
+          <div class="rl-code-text" id="rl-code-text"></div>
+        </div>
+
+        <!-- IME入力用の隠しテキストエリア -->
+        <textarea id="rl-ime-input" class="rl-ime-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+        <div class="rl-typing-hint">
+          改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+        </div>
+
+        <!-- 指ガイド -->
+        <div class="finger-guide" id="rl-finger-guide">
+          <span id="rl-finger-hand"></span> <span id="rl-finger-name"></span>
+        </div>
+
+        <!-- キーボード -->
+        <div id="rl-keyboard" class="keyboard-wrapper"></div>
+
+        <!-- 手のイラスト -->
+        <div id="rl-hand-guide"></div>
+      </div>
+    </div>
+
+    <!-- RL画面5: 完了画面 -->
+    <div id="screen-ruby-complete" class="screen">
+      <div class="rl-complete-container">
+        <h2 class="rl-complete-title">Step Complete!</h2>
+
+        <!-- 結果統計 -->
+        <div class="rl-result-stats" id="rl-result-stats">
+          <div class="result-stat">
+            <span class="result-stat-label">WPM</span>
+            <span class="result-stat-value" id="rl-result-wpm">0</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">正確率</span>
+            <span class="result-stat-value" id="rl-result-accuracy">0%</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">時間</span>
+            <span class="result-stat-value" id="rl-result-time">00:00</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">ミス数</span>
+            <span class="result-stat-value" id="rl-result-miss">0</span>
+          </div>
+        </div>
+
+        <!-- 解説 -->
+        <div class="rl-complete-explanation-box">
+          <h3>解説</h3>
+          <p id="rl-complete-explanation"></p>
+        </div>
+
+        <!-- 実行出力 -->
+        <div class="rl-output-section" id="rl-output-section">
+          <h3>実行結果（期待される出力）</h3>
+          <pre id="rl-expected-output" class="rl-output-pre"></pre>
+        </div>
+
+        <!-- コピーセクション -->
+        <div class="rl-copy-section" id="rl-copy-section">
+          <h3>ターミナルで実行する</h3>
+          <div class="rl-copy-row">
+            <div class="rl-copy-item">
+              <span class="rl-copy-label">1. ファイル作成コマンド</span>
+              <code id="rl-file-cmd-text" class="rl-cmd-text"></code>
+              <button id="rl-copy-file-cmd" class="btn btn-copy">COPY</button>
+            </div>
+            <div class="rl-copy-item">
+              <span class="rl-copy-label">2. 実行コマンド</span>
+              <code id="rl-run-cmd-text" class="rl-cmd-text"></code>
+              <button id="rl-copy-run-cmd" class="btn btn-copy">COPY</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ナビゲーション -->
+        <div class="rl-complete-actions">
+          <button class="btn btn-primary" id="rl-next-step">次のステップ</button>
+          <button class="btn btn-secondary" id="rl-back-to-steps">ステップ一覧</button>
+          <button class="btn btn-secondary" id="rl-back-to-chapters">章選択に戻る</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== 画面4: 結果画面 ===== -->
     <div id="screen-result" class="screen">
       <div class="result-container">
@@ -156,6 +313,8 @@
   <script src="js/keyboard.js"></script>
   <script src="js/hands.js"></script>
   <script src="js/snippets.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/ruby-learning-data.js?v=4"></script>
+  <script src="js/ruby-learning.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>

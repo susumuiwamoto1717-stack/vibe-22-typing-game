@@ -646,6 +646,435 @@ body {
   justify-content: center;
 }
 
+/* ===== RUNTEQ Ruby学習モード ===== */
+
+/* モード選択ボタン */
+.rl-mode-btn {
+  border-color: #cc0033 !important;
+  background: linear-gradient(135deg, #fff5f5, #fff) !important;
+}
+.rl-mode-btn:hover {
+  border-color: #cc0033 !important;
+  box-shadow: 0 4px 12px rgba(204, 0, 51, 0.15) !important;
+}
+.rl-icon {
+  color: #cc0033 !important;
+  font-size: 18px !important;
+}
+
+/* パスワード画面 */
+.rl-password-container {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  padding: 40px 20px;
+}
+.rl-logo {
+  font-size: 36px;
+  font-weight: 800;
+  color: #cc0033;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.rl-password-container h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 12px;
+}
+.rl-password-desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 24px;
+}
+.rl-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rl-password-input {
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.rl-password-input:focus {
+  border-color: #cc0033;
+}
+.rl-password-error {
+  color: #e74c3c;
+  font-size: 13px;
+  min-height: 20px;
+}
+.rl-btn {
+  width: 100%;
+}
+
+/* 章選択画面 */
+.rl-chapters-container {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+.rl-section-title {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 8px;
+}
+.rl-section-desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 24px;
+}
+.rl-chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.rl-chapter-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+.rl-chapter-btn:hover {
+  border-color: #cc0033;
+  box-shadow: 0 2px 8px rgba(204, 0, 51, 0.1);
+}
+.rl-chapter-id {
+  font-size: 12px;
+  font-weight: 700;
+  color: #cc0033;
+  white-space: nowrap;
+  min-width: 70px;
+}
+.rl-chapter-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+.rl-chapter-count {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+.rl-btn-back {
+  margin-top: 8px;
+}
+
+/* ステップ選択画面 */
+.rl-steps-container {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+.rl-step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+.rl-step-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+.rl-step-btn:hover {
+  border-color: #cc0033;
+  background: #fff5f5;
+}
+.rl-step-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: #cc0033;
+  min-width: 28px;
+  text-align: center;
+}
+.rl-step-title {
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+}
+.rl-step-nocode {
+  font-size: 11px;
+  color: #999;
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* タイピング画面 */
+#screen-ruby-typing.active {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.rl-typing-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+.rl-status-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 8px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+#rl-step-info-wrap {
+  flex: 1;
+  text-align: center;
+}
+#rl-step-info {
+  font-size: 13px;
+  font-weight: 600;
+  color: #cc0033;
+}
+.rl-explanation-bar {
+  padding: 10px 20px;
+  background: #f8f0f2;
+  border-bottom: 1px solid #e8d8db;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  text-align: center;
+}
+.rl-ime-input {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.rl-code-area {
+  flex: 1;
+  display: flex;
+  background: #1e1e1e;
+  overflow-y: auto;
+  padding: 16px 0;
+  min-height: 200px;
+}
+.rl-line-numbers {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px 0 16px;
+  text-align: right;
+  user-select: none;
+}
+.rl-line-num {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  line-height: 24px;
+  color: #555;
+}
+.rl-code-text {
+  flex: 1;
+  padding: 0 16px 0 8px;
+}
+.rl-code-line {
+  line-height: 24px;
+  min-height: 24px;
+  white-space: pre;
+}
+.rl-char {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  display: inline;
+}
+.rl-char.pending {
+  color: #e0e0e0;
+}
+.rl-char.current {
+  color: #ff6600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rl-char.typed {
+  color: #666;
+}
+.rl-char.miss {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.15);
+}
+.rl-newline.pending {
+  color: #444;
+}
+.rl-newline.current {
+  color: #ff6600;
+  background: rgba(255, 102, 0, 0.1);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.rl-newline.typed {
+  color: #444;
+}
+.rl-typing-hint {
+  padding: 8px 20px;
+  background: #f5f5f5;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
+.rl-typing-hint kbd {
+  background: #e0e0e0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  border: 1px solid #ccc;
+}
+
+/* 完了画面 */
+#screen-ruby-complete.active {
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+.rl-complete-container {
+  max-width: 700px;
+  width: 100%;
+  padding: 0 20px 40px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+.rl-complete-title {
+  text-align: center;
+  font-size: 24px;
+  color: #cc0033;
+  margin-bottom: 20px;
+}
+.rl-result-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.rl-complete-explanation-box {
+  background: #f8f0f2;
+  border: 1px solid #e8d8db;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.rl-complete-explanation-box h3 {
+  font-size: 14px;
+  color: #cc0033;
+  margin-bottom: 8px;
+}
+.rl-complete-explanation-box p {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+}
+.rl-output-section {
+  background: #1e1e1e;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.rl-output-section h3 {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+}
+.rl-output-pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  color: #4ec9b0;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  margin: 0;
+}
+.rl-copy-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.rl-copy-section h3 {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 12px;
+}
+.rl-copy-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rl-copy-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+.rl-copy-label {
+  font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+  min-width: 140px;
+}
+.rl-cmd-text {
+  flex: 1;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-copy {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #cc0033;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-copy:hover {
+  background: #a80029;
+}
+.btn-copy.copied {
+  background: #27ae60;
+}
+.rl-complete-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* ===== レスポンシブ ===== */
 @media (max-width: 768px) {
   .keyboard-wrapper {

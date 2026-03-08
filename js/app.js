@@ -448,8 +448,8 @@
       updateKeyboardLayout(e.target.value);
     });
 
-    // モード選択ボタン
-    document.querySelectorAll('.mode-btn').forEach(btn => {
+    // モード選択ボタン（Ruby学習モードボタンは除外）
+    document.querySelectorAll('.mode-btn[data-mode]').forEach(btn => {
       btn.addEventListener('click', () => {
         selectMode(btn.dataset.mode);
       });
@@ -467,6 +467,22 @@
     els.btnBack.addEventListener('click', () => {
       showScreen('select');
     });
+
+    // RUNTEQ Ruby学習モード
+    const btnRubyLearning = document.getElementById('btn-ruby-learning');
+    if (btnRubyLearning) {
+      btnRubyLearning.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.RubyLearning) {
+          window.RubyLearning.show();
+        }
+      });
+    }
+
+    // Ruby学習モード初期化
+    if (window.RubyLearning) {
+      window.RubyLearning.init();
+    }
   }
 
   // ===== 起動 =====
