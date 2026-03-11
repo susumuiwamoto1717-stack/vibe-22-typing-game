@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Zen Maru Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   background: #f5f5f5;
   color: #333;
   min-height: 100vh;
@@ -1115,4 +1115,337 @@ body {
     transform: scale(0.55);
     transform-origin: top center;
   }
+}
+
+/* ===== ダッシュボード画面 ===== */
+#screen-dashboard.active {
+  display: block;
+  overflow-y: auto;
+}
+
+.dash-bg {
+  min-height: 100vh;
+  background: #eef0f8;
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 48px;
+}
+
+.dash-container {
+  max-width: 520px;
+  width: 100%;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(80, 70, 140, 0.08);
+  padding: 40px 28px;
+  text-align: center;
+}
+
+.dash-sub-title {
+  font-family: "Yomogi", cursive;
+  font-size: 16px;
+  color: #6366f1;
+  margin-bottom: 4px;
+}
+
+.dash-title {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #4338ca;
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+/* 名前入力 */
+.dash-name-section {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.dash-name-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.dash-name-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #c7d2fe;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.dash-name-input:focus {
+  border-color: #6366f1;
+}
+
+.dash-name-input::placeholder {
+  color: #9ca3af;
+}
+
+.dash-name-hint {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 6px;
+}
+
+/* カード */
+.dash-card {
+  background: #fffbe6;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.dash-card-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4338ca;
+  margin-bottom: 12px;
+}
+
+/* プログレスバー */
+.dash-progress-bar {
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.dash-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #818cf8, #6366f1);
+  border-radius: 7px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.dash-progress-info {
+  text-align: right;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.dash-progress-pct {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* カレンダー */
+.dash-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dash-cal-nav {
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  color: #6366f1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.dash-cal-nav:hover {
+  background: #eef2ff;
+  border-color: #6366f1;
+}
+
+.dash-cal-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dash-cal-weekdays {
+  margin-bottom: 4px;
+}
+
+.dash-cal-cell {
+  text-align: center;
+  font-size: 13px;
+  padding: 6px 0;
+  border-radius: 6px;
+}
+
+.dash-cal-weekday {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.dash-cal-day {
+  color: #374151;
+  position: relative;
+}
+
+.dash-cal-empty {
+  /* 空白セル */
+}
+
+.dash-cal-today {
+  border: 2px solid #f59e0b;
+  font-weight: 700;
+  color: #b45309;
+}
+
+.dash-cal-active {
+  background: #c7d2fe;
+  color: #3730a3;
+  font-weight: 700;
+}
+
+.dash-cal-today.dash-cal-active {
+  background: #c7d2fe;
+  border: 2px solid #f59e0b;
+  color: #3730a3;
+}
+
+.dash-cal-summary {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* 続きから再開ボタン */
+.dash-resume-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #fff;
+  color: #4338ca;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid #c7d2fe;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.dash-resume-btn:hover {
+  background: #eef2ff;
+  border-color: #6366f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* 開始ボタン */
+.dash-start-btn {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  margin-bottom: 12px;
+}
+
+.dash-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.dash-total-info {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* ダッシュボード レスポンシブ */
+@media (max-width: 480px) {
+  .dash-container {
+    padding: 28px 16px;
+  }
+
+  .dash-title {
+    font-size: 22px;
+  }
+
+  .dash-cal-cell {
+    font-size: 11px;
+    padding: 5px 0;
+  }
+}
+
+/* ===== RUNTEQ Git演習モード ===== */
+
+/* モード選択ボタン */
+.gl-mode-btn {
+  border-color: #f05033 !important;
+  background: linear-gradient(135deg, #fff8f5, #fff) !important;
+}
+.gl-mode-btn:hover {
+  border-color: #f05033 !important;
+  box-shadow: 0 4px 12px rgba(240, 80, 51, 0.15) !important;
+}
+.gl-icon {
+  color: #f05033 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+/* ロゴ */
+.gl-logo {
+  background: linear-gradient(135deg, #f05033, #de3c1d) !important;
+}
+.gl-logo-sub {
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 8px;
+  opacity: 0.85;
+}
+
+/* タイピング画面のCOPYボタン（スキップ用） */
+.gl-copy-skip {
+  margin-left: 16px;
+  padding: 4px 12px;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+/* 完了画面のコマンド表示 */
+.gl-copy-item-full {
+  width: 100%;
+}
+.gl-cmd-pre {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: visible;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 8px;
 }

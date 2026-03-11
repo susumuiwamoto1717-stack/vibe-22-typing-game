@@ -22,6 +22,7 @@
 
   // ===== DOM要素 =====
   const screens = {
+    dashboard: document.getElementById('screen-dashboard'),
     select: document.getElementById('screen-select'),
     ready: document.getElementById('screen-ready'),
     typing: document.getElementById('screen-typing'),
@@ -97,6 +98,11 @@
 
     els.readyModeName.textContent = modeNames[mode] || mode;
     showScreen('ready');
+
+    // セッション保存
+    if (window.Dashboard && window.Dashboard.saveLastSession) {
+      window.Dashboard.saveLastSession({ type: 'normal', mode: mode });
+    }
 
     // キーボードのスペースキーをハイライト
     if (keyboardReady) keyboardReady.highlightSpace();
@@ -257,8 +263,12 @@
         showScreen('select');
         return;
       }
-      if (state.currentScreen === 'ready') {
-        showScreen('select');
+      if (state.currentScreen === 'ready' || state.currentScreen === 'select') {
+        if (window.Dashboard) {
+          window.Dashboard.showDashboard();
+        } else {
+          showScreen('select');
+        }
         return;
       }
       return;
@@ -379,6 +389,11 @@
     renderMissChars();
 
     showScreen('result');
+
+    // 学習記録を保存
+    if (window.Dashboard) {
+      window.Dashboard.recordSession();
+    }
   }
 
   // ===== レベル判定 =====
@@ -443,6 +458,17 @@
     // キーボード初期化
     initKeyboards();
 
+    // ヘッダータイトルクリック → ダッシュボードへ
+    const headerTitle = document.getElementById('header-title');
+    if (headerTitle) {
+      headerTitle.addEventListener('click', () => {
+        stopTimer();
+        if (window.Dashboard) {
+          window.Dashboard.showDashboard();
+        }
+      });
+    }
+
     // キーボードレイアウト変更
     els.keyboardSelect.addEventListener('change', (e) => {
       updateKeyboardLayout(e.target.value);
@@ -463,15 +489,19 @@
       selectMode(state.currentMode);
     });
 
-    // 戻るボタン
+    // 戻るボタン → ダッシュボードに戻る
     els.btnBack.addEventListener('click', () => {
-      showScreen('select');
+      if (window.Dashboard) {
+        window.Dashboard.showDashboard();
+      } else {
+        showScreen('select');
+      }
     });
 
-    // RUNTEQ Ruby学習モード
-    const btnRubyLearning = document.getElementById('btn-ruby-learning');
-    if (btnRubyLearning) {
-      btnRubyLearning.addEventListener('click', (e) => {
+    // RUNTEQ学習モード
+    const btnRunteqLearning = document.getElementById('btn-runteq-learning');
+    if (btnRunteqLearning) {
+      btnRunteqLearning.addEventListener('click', (e) => {
         e.stopPropagation();
         if (window.RubyLearning) {
           window.RubyLearning.show();
@@ -482,6 +512,16 @@
     // Ruby学習モード初期化
     if (window.RubyLearning) {
       window.RubyLearning.init();
+    }
+
+    // Git演習モード初期化
+    if (window.GitLearning) {
+      window.GitLearning.init();
+    }
+
+    // ダッシュボード初期化
+    if (window.Dashboard) {
+      window.Dashboard.init();
     }
   }
 

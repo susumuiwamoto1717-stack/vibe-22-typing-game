@@ -145,12 +145,17 @@
     const pw = els.passwordInput.value;
     if (pw === RUNTEQ_PASSWORD) {
       rlState.authenticated = true;
-      showChapterScreen();
+      showCourseScreen();
     } else {
       els.passwordError.textContent = 'パスワードが違います';
       els.passwordInput.value = '';
       els.passwordInput.focus();
     }
+  }
+
+  // ===== コース選択画面 =====
+  function showCourseScreen() {
+    showRLScreen('screen-runteq-courses');
   }
 
   // ===== 章選択画面 =====
@@ -210,6 +215,15 @@
   function startRLTyping() {
     const chapter = RUBY_LEARNING_DATA[rlState.currentChapterId];
     const step = chapter.steps[rlState.currentStepIndex];
+
+    // セッション保存
+    if (window.Dashboard && window.Dashboard.saveLastSession) {
+      window.Dashboard.saveLastSession({
+        type: 'ruby-learning',
+        chapterId: rlState.currentChapterId,
+        stepIndex: rlState.currentStepIndex
+      });
+    }
 
     // Reset state
     rlState.currentCharIndex = 0;
@@ -492,6 +506,20 @@
     const chapter = RUBY_LEARNING_DATA[rlState.currentChapterId];
     const step = chapter.steps[rlState.currentStepIndex];
 
+    // 学習記録を保存
+    if (window.Dashboard) {
+      window.Dashboard.recordSession();
+      // 次のステップをセッションとして保存
+      const nextIndex = rlState.currentStepIndex + 1;
+      if (nextIndex < chapter.steps.length) {
+        window.Dashboard.saveLastSession({
+          type: 'ruby-learning',
+          chapterId: rlState.currentChapterId,
+          stepIndex: nextIndex
+        });
+      }
+    }
+
     if (noCode) {
       // 解説のみステップ
       document.getElementById('rl-result-stats').style.display = 'none';
@@ -611,10 +639,31 @@
       document.getElementById('screen-ruby-password').classList.remove('active');
     });
 
+    // Course selection screen
+    const btnCourseRuby = document.getElementById('btn-course-ruby');
+    const btnCourseGit = document.getElementById('btn-course-git');
+    const courseBack = document.getElementById('runteq-course-back');
+
+    if (btnCourseRuby) {
+      btnCourseRuby.addEventListener('click', () => showChapterScreen());
+    }
+    if (btnCourseGit) {
+      btnCourseGit.addEventListener('click', () => {
+        if (window.GitLearning && window.GitLearning.showChapters) {
+          window.GitLearning.showChapters();
+        }
+      });
+    }
+    if (courseBack) {
+      courseBack.addEventListener('click', () => {
+        document.getElementById('screen-select').classList.add('active');
+        document.getElementById('screen-runteq-courses').classList.remove('active');
+      });
+    }
+
     // Chapter screen
     els.chapterBack.addEventListener('click', () => {
-      document.getElementById('screen-select').classList.add('active');
-      document.getElementById('screen-ruby-chapters').classList.remove('active');
+      showCourseScreen();
     });
 
     // Step screen
@@ -635,9 +684,34 @@
     els.rlBackToChapters.addEventListener('click', showChapterScreen);
   }
 
+  // ===== 途中から再開 =====
+  function resumeAt(chapterId, stepIndex) {
+    if (!els) els = getEls();
+    rlState.authenticated = true;
+    rlState.currentChapterId = chapterId;
+    rlState.currentStepIndex = stepIndex;
+
+    const chapter = RUBY_LEARNING_DATA[chapterId];
+    if (!chapter || !chapter.steps[stepIndex]) {
+      showChapterScreen();
+      return;
+    }
+
+    const step = chapter.steps[stepIndex];
+    if (step.code && step.code.trim().length > 0) {
+      startRLTyping();
+    } else {
+      showRLComplete(true);
+    }
+  }
+
   // ===== 公開API =====
   window.RubyLearning = {
     show: showPasswordScreen,
-    init: initRubyLearning
+    init: initRubyLearning,
+    resumeAt: resumeAt,
+    showCourses: showCourseScreen,
+    isAuthenticated: () => rlState.authenticated,
+    setAuthenticated: () => { rlState.authenticated = true; }
   };
 })();
