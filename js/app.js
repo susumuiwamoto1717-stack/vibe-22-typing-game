@@ -563,16 +563,6 @@
       window.RubyLevels.init();
     }
 
-    // ダッシュボードの5段階レベル学習ボタン
-    const btnLevels = document.getElementById("dash-levels-btn");
-    if (btnLevels) {
-      btnLevels.addEventListener("click", () => {
-        if (window.RubyLevels) {
-          window.RubyLevels.show();
-        }
-      });
-    }
-
     // ダッシュボード初期化
     if (window.Dashboard) {
       window.Dashboard.init();
