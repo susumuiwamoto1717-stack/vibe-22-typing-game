@@ -178,6 +178,11 @@
       if (window.GitLearning && window.GitLearning.resumeAt) {
         window.GitLearning.resumeAt(session.chapterId, session.stepIndex);
       }
+    } else if (session.type === 'rails-learning') {
+      // Rails入門モードの続き
+      if (window.RailsLearning && window.RailsLearning.resumeAt) {
+        window.RailsLearning.resumeAt(session.chapterId, session.stepIndex);
+      }
     } else if (session.type === 'normal' && session.mode) {
       // 通常モード → そのモードの待機画面へ
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -210,6 +215,12 @@
       if (ch) {
         const step = ch.steps[session.stepIndex];
         label = `続きから再開: Git Ch.${session.chapterId} - ${step ? step.title : ''}`;
+      }
+    } else if (session.type === 'rails-learning' && typeof RAILS_LEARNING_DATA !== 'undefined') {
+      const ch = RAILS_LEARNING_DATA[session.chapterId];
+      if (ch) {
+        const step = ch.steps[session.stepIndex];
+        label = `続きから再開: Rails Ch.${session.chapterId} - ${step ? step.title : ''}`;
       }
     } else if (session.type === 'normal') {
       const modeNames = {

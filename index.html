@@ -1,526 +1,946 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Typing Practice</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Yomogi&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=6">
-</head>
-<body>
-  <!-- ヘッダー -->
-  <header id="header">
-    <h1 id="header-title" style="cursor:pointer">Code Typing Practice</h1>
-    <div class="header-controls">
-      <select id="keyboard-select" title="キーボードレイアウト">
-        <option value="US">US</option>
-        <option value="JIS">JIS</option>
-      </select>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Typing Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Yomogi&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css?v=6" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header id="header">
+      <h1 id="header-title" style="cursor: pointer">Code Typing Practice</h1>
+      <div class="header-controls">
+        <select id="keyboard-select" title="キーボードレイアウト">
+          <option value="US">US</option>
+          <option value="JIS">JIS</option>
+        </select>
+      </div>
+    </header>
 
-  <main id="main">
-    <!-- ===== 画面0: ダッシュボード ===== -->
-    <div id="screen-dashboard" class="screen active">
-      <div class="dash-bg">
-        <div class="dash-container">
-          <p class="dash-sub-title">Code Typing Practice</p>
-          <h1 class="dash-title">コーディング タイピング練習</h1>
+    <main id="main">
+      <!-- ===== 画面0: ダッシュボード ===== -->
+      <div id="screen-dashboard" class="screen active">
+        <div class="dash-bg">
+          <div class="dash-container">
+            <p class="dash-sub-title">Code Typing Practice</p>
+            <h1 class="dash-title">コーディング タイピング練習</h1>
 
-          <!-- 名前入力 -->
-          <div class="dash-name-section">
-            <label class="dash-name-label">名前またはメールアドレス（進捗保存用）</label>
-            <input type="text" id="dash-user-key" class="dash-name-input" placeholder="例: tanaka@example.com">
-            <p class="dash-name-hint">入力すると進捗が自動保存され、次回続きから再開できます</p>
-          </div>
-
-          <!-- 進捗 -->
-          <div class="dash-card">
-            <p class="dash-card-label">全体の進捗</p>
-            <div class="dash-progress-bar">
-              <div class="dash-progress-fill" id="dash-progress-fill"></div>
+            <!-- 名前入力 -->
+            <div class="dash-name-section">
+              <label class="dash-name-label"
+                >名前またはメールアドレス（進捗保存用）</label
+              >
+              <input
+                type="text"
+                id="dash-user-key"
+                class="dash-name-input"
+                placeholder="例: tanaka@example.com"
+              />
+              <p class="dash-name-hint">
+                入力すると進捗が自動保存され、次回続きから再開できます
+              </p>
             </div>
-            <div class="dash-progress-info">
-              <span id="dash-progress-text">0 / 0</span>
+
+            <!-- 進捗 -->
+            <div class="dash-card">
+              <p class="dash-card-label">全体の進捗</p>
+              <div class="dash-progress-bar">
+                <div class="dash-progress-fill" id="dash-progress-fill"></div>
+              </div>
+              <div class="dash-progress-info">
+                <span id="dash-progress-text">0 / 0</span>
+              </div>
+              <p class="dash-progress-pct" id="dash-progress-pct">0% 完了</p>
             </div>
-            <p class="dash-progress-pct" id="dash-progress-pct">0% 完了</p>
-          </div>
 
-          <!-- カレンダー -->
-          <div class="dash-card">
-            <div class="dash-calendar-header">
-              <button class="dash-cal-nav" id="dash-cal-prev">&lt;</button>
-              <p class="dash-card-label" id="dash-cal-title"></p>
-              <button class="dash-cal-nav" id="dash-cal-next">&gt;</button>
+            <!-- カレンダー -->
+            <div class="dash-card">
+              <div class="dash-calendar-header">
+                <button class="dash-cal-nav" id="dash-cal-prev">&lt;</button>
+                <p class="dash-card-label" id="dash-cal-title"></p>
+                <button class="dash-cal-nav" id="dash-cal-next">&gt;</button>
+              </div>
+              <div class="dash-calendar" id="dash-calendar"></div>
+              <p class="dash-cal-summary" id="dash-cal-summary"></p>
             </div>
-            <div class="dash-calendar" id="dash-calendar"></div>
-            <p class="dash-cal-summary" id="dash-cal-summary"></p>
+
+            <!-- 続きから再開ボタン -->
+            <button
+              class="dash-resume-btn"
+              id="dash-resume-btn"
+              style="display: none"
+            >
+              前回の続きから再開
+            </button>
+
+            <!-- 5段階レベル学習ボタン -->
+            <button class="dash-levels-btn" id="dash-levels-btn">
+              🎯 5段階レベル学習
+            </button>
+
+            <!-- 開始ボタン -->
+            <button class="dash-start-btn" id="dash-start-btn">
+              学習を開始する
+            </button>
+            <p class="dash-total-info" id="dash-total-info"></p>
           </div>
-
-          <!-- 続きから再開ボタン -->
-          <button class="dash-resume-btn" id="dash-resume-btn" style="display:none">前回の続きから再開</button>
-
-          <!-- 開始ボタン -->
-          <button class="dash-start-btn" id="dash-start-btn">学習を開始する</button>
-          <p class="dash-total-info" id="dash-total-info"></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== 画面1: モード選択画面 ===== -->
-    <div id="screen-select" class="screen">
-      <div class="select-container">
-        <h2 class="select-title">練習モードを選択</h2>
-        <div class="mode-grid">
-          <button class="mode-btn" data-mode="symbols">
-            <span class="mode-icon">{ }</span>
-            <span class="mode-name">記号特訓</span>
-            <span class="mode-desc">コーディング頻出記号を集中練習</span>
-          </button>
-          <button class="mode-btn" data-mode="html_css">
-            <span class="mode-icon">&lt;/&gt;</span>
-            <span class="mode-name">HTML / CSS</span>
-            <span class="mode-desc">タグとCSSプロパティの練習</span>
-          </button>
-          <button class="mode-btn" data-mode="javascript">
-            <span class="mode-icon">JS</span>
-            <span class="mode-name">JavaScript</span>
-            <span class="mode-desc">JS構文・関数・配列操作</span>
-          </button>
-          <button class="mode-btn" data-mode="ruby">
-            <span class="mode-icon">Rb</span>
-            <span class="mode-name">Ruby</span>
-            <span class="mode-desc">Ruby / Rails構文の練習</span>
-          </button>
-          <button class="mode-btn rl-mode-btn" id="btn-runteq-learning">
-            <span class="mode-icon rl-icon">RUNTEQ</span>
-            <span class="mode-name">RUNTEQ学習</span>
-            <span class="mode-desc">カリキュラムに沿った学習モード</span>
-          </button>
-          <button class="mode-btn" data-mode="mix">
-            <span class="mode-icon">MIX</span>
-            <span class="mode-name">ミックス</span>
-            <span class="mode-desc">全言語からランダム出題</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== 画面2: 待機画面（スペースで開始） ===== -->
-    <div id="screen-ready" class="screen">
-      <div class="ready-container">
-        <div class="ready-mode-name" id="ready-mode-name"></div>
-        <div class="ready-message">スペースキーで開始</div>
-        <div class="ready-sub">終了は Esc キーです</div>
-        <div id="keyboard-ready" class="keyboard-wrapper"></div>
-      </div>
-    </div>
-
-    <!-- ===== 画面3: タイピング中 ===== -->
-    <div id="screen-typing" class="screen">
-      <!-- ステータスバー -->
-      <div class="status-bar">
-        <div class="status-item">
-          <span class="status-label">タイマー</span>
-          <span class="status-value" id="timer">00:00</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label">問題</span>
-          <span class="status-value" id="question-count">1 / 10</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label">WPM</span>
-          <span class="status-value" id="wpm">0</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label">正確率</span>
-          <span class="status-value" id="accuracy">100%</span>
         </div>
       </div>
 
-      <!-- 記号ガイド（上段） -->
-      <div class="symbol-guide" id="symbol-guide">
-        <div class="symbol-char" id="guide-char"></div>
-        <div class="symbol-name" id="guide-name"></div>
-        <div class="symbol-usage" id="guide-usage"></div>
-      </div>
-
-      <!-- ヒント表示 -->
-      <div class="typing-hint" id="typing-hint"></div>
-
-      <!-- タイピングエリア（下段） -->
-      <div class="typing-area">
-        <div class="typing-text" id="typing-text"></div>
-      </div>
-
-      <!-- 指ガイド -->
-      <div class="finger-guide" id="finger-guide">
-        <span id="finger-hand"></span> <span id="finger-name"></span>
-      </div>
-
-      <!-- キーボード -->
-      <div id="keyboard-typing" class="keyboard-wrapper"></div>
-
-      <!-- 手のイラスト -->
-      <div id="hand-guide-typing"></div>
-    </div>
-
-    <!-- ===== RUNTEQ Ruby学習モード ===== -->
-
-    <!-- RL画面1: パスワード入力（RUNTEQ共通） -->
-    <div id="screen-ruby-password" class="screen">
-      <div class="rl-password-container">
-        <div class="rl-logo">RUNTEQ</div>
-        <h2>RUNTEQ 学習モード</h2>
-        <p class="rl-password-desc">RUNTEQ生徒専用です。パスワードを入力してください。</p>
-        <div class="rl-password-form">
-          <input type="password" id="ruby-password-input" class="rl-password-input" placeholder="パスワード">
-          <span id="ruby-password-error" class="rl-password-error"></span>
-          <button id="ruby-password-submit" class="btn btn-primary rl-btn">ログイン</button>
-          <button id="ruby-password-back" class="btn btn-secondary rl-btn">戻る</button>
+      <!-- ===== 画面1: モード選択画面 ===== -->
+      <div id="screen-select" class="screen">
+        <div class="select-container">
+          <h2 class="select-title">練習モードを選択</h2>
+          <div class="mode-grid">
+            <button class="mode-btn" data-mode="symbols">
+              <span class="mode-icon">{ }</span>
+              <span class="mode-name">記号特訓</span>
+              <span class="mode-desc">コーディング頻出記号を集中練習</span>
+            </button>
+            <button class="mode-btn" data-mode="html_css">
+              <span class="mode-icon">&lt;/&gt;</span>
+              <span class="mode-name">HTML / CSS</span>
+              <span class="mode-desc">タグとCSSプロパティの練習</span>
+            </button>
+            <button class="mode-btn" data-mode="javascript">
+              <span class="mode-icon">JS</span>
+              <span class="mode-name">JavaScript</span>
+              <span class="mode-desc">JS構文・関数・配列操作</span>
+            </button>
+            <button class="mode-btn" data-mode="ruby">
+              <span class="mode-icon">Rb</span>
+              <span class="mode-name">Ruby</span>
+              <span class="mode-desc">Ruby / Rails構文の練習</span>
+            </button>
+            <button class="mode-btn rl-mode-btn" id="btn-runteq-learning">
+              <span class="mode-icon rl-icon">RUNTEQ</span>
+              <span class="mode-name">RUNTEQ学習</span>
+              <span class="mode-desc">カリキュラムに沿った学習モード</span>
+            </button>
+            <button class="mode-btn" data-mode="mix">
+              <span class="mode-icon">MIX</span>
+              <span class="mode-name">ミックス</span>
+              <span class="mode-desc">全言語からランダム出題</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- RL画面1.5: コース選択 -->
-    <div id="screen-runteq-courses" class="screen">
-      <div class="rl-chapters-container">
-        <h2 class="rl-section-title">RUNTEQ 学習コース</h2>
-        <p class="rl-section-desc">学習するコースを選択してください</p>
-        <div id="runteq-course-list" class="rl-chapter-list">
-          <button class="rl-chapter-btn runteq-course-btn" id="btn-course-ruby">
-            <span class="rl-chapter-id" style="color:#cc0033">Rb</span>
-            <span class="rl-chapter-title">Ruby入門</span>
-            <span class="rl-chapter-count">全11章・28ステップ</span>
-          </button>
-          <button class="rl-chapter-btn runteq-course-btn" id="btn-course-git">
-            <span class="rl-chapter-id" style="color:#f05033">Git</span>
-            <span class="rl-chapter-title">Git / GitHub 演習</span>
-            <span class="rl-chapter-count">全5章・17ステップ</span>
-          </button>
+      <!-- ===== 画面2: 待機画面（スペースで開始） ===== -->
+      <div id="screen-ready" class="screen">
+        <div class="ready-container">
+          <div class="ready-mode-name" id="ready-mode-name"></div>
+          <div class="ready-message">スペースキーで開始</div>
+          <div class="ready-sub">終了は Esc キーです</div>
+          <div id="keyboard-ready" class="keyboard-wrapper"></div>
         </div>
-        <button id="runteq-course-back" class="btn btn-secondary rl-btn-back">モード選択に戻る</button>
       </div>
-    </div>
 
-    <!-- RL画面2: 章選択（Ruby） -->
-    <div id="screen-ruby-chapters" class="screen">
-      <div class="rl-chapters-container">
-        <h2 class="rl-section-title">RUNTEQ Ruby入門</h2>
-        <p class="rl-section-desc">学習する章を選択してください</p>
-        <div id="ruby-chapter-list" class="rl-chapter-list"></div>
-        <button id="ruby-chapter-back" class="btn btn-secondary rl-btn-back">モード選択に戻る</button>
-      </div>
-    </div>
-
-    <!-- RL画面3: ステップ選択 -->
-    <div id="screen-ruby-steps" class="screen">
-      <div class="rl-steps-container">
-        <h2 id="ruby-step-title" class="rl-section-title"></h2>
-        <div id="ruby-step-list" class="rl-step-list"></div>
-        <button id="ruby-step-back" class="btn btn-secondary rl-btn-back">章選択に戻る</button>
-      </div>
-    </div>
-
-    <!-- RL画面4: タイピング中 -->
-    <div id="screen-ruby-typing" class="screen">
-      <div class="rl-typing-container">
+      <!-- ===== 画面3: タイピング中 ===== -->
+      <div id="screen-typing" class="screen">
         <!-- ステータスバー -->
-        <div class="rl-status-bar">
+        <div class="status-bar">
           <div class="status-item">
             <span class="status-label">タイマー</span>
-            <span class="status-value" id="rl-timer">00:00</span>
+            <span class="status-value" id="timer">00:00</span>
           </div>
-          <div class="status-item" id="rl-step-info-wrap">
-            <span class="status-value" id="rl-step-info"></span>
+          <div class="status-item">
+            <span class="status-label">問題</span>
+            <span class="status-value" id="question-count">1 / 10</span>
           </div>
           <div class="status-item">
             <span class="status-label">WPM</span>
-            <span class="status-value" id="rl-wpm">0</span>
+            <span class="status-value" id="wpm">0</span>
           </div>
           <div class="status-item">
             <span class="status-label">正確率</span>
-            <span class="status-value" id="rl-accuracy">100%</span>
+            <span class="status-value" id="accuracy">100%</span>
           </div>
         </div>
 
-        <!-- 解説エリア -->
-        <div class="rl-explanation-bar">
-          <span id="rl-explanation"></span>
+        <!-- 記号ガイド（上段） -->
+        <div class="symbol-guide" id="symbol-guide">
+          <div class="symbol-char" id="guide-char"></div>
+          <div class="symbol-name" id="guide-name"></div>
+          <div class="symbol-usage" id="guide-usage"></div>
         </div>
 
-        <!-- コードエリア -->
-        <div class="rl-code-area" id="rl-code-area">
-          <div class="rl-line-numbers" id="rl-line-numbers"></div>
-          <div class="rl-code-text" id="rl-code-text"></div>
-        </div>
+        <!-- ヒント表示 -->
+        <div class="typing-hint" id="typing-hint"></div>
 
-        <!-- IME入力用の隠しテキストエリア -->
-        <textarea id="rl-ime-input" class="rl-ime-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-
-        <div class="rl-typing-hint">
-          改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+        <!-- タイピングエリア（下段） -->
+        <div class="typing-area">
+          <div class="typing-text" id="typing-text"></div>
         </div>
 
         <!-- 指ガイド -->
-        <div class="finger-guide" id="rl-finger-guide">
-          <span id="rl-finger-hand"></span> <span id="rl-finger-name"></span>
+        <div class="finger-guide" id="finger-guide">
+          <span id="finger-hand"></span> <span id="finger-name"></span>
         </div>
 
         <!-- キーボード -->
-        <div id="rl-keyboard" class="keyboard-wrapper"></div>
+        <div id="keyboard-typing" class="keyboard-wrapper"></div>
 
         <!-- 手のイラスト -->
-        <div id="rl-hand-guide"></div>
+        <div id="hand-guide-typing"></div>
       </div>
-    </div>
 
-    <!-- RL画面5: 完了画面 -->
-    <div id="screen-ruby-complete" class="screen">
-      <div class="rl-complete-container">
-        <h2 class="rl-complete-title">Step Complete!</h2>
+      <!-- ===== RUNTEQ Ruby学習モード ===== -->
 
-        <!-- 結果統計 -->
-        <div class="rl-result-stats" id="rl-result-stats">
-          <div class="result-stat">
-            <span class="result-stat-label">WPM</span>
-            <span class="result-stat-value" id="rl-result-wpm">0</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">正確率</span>
-            <span class="result-stat-value" id="rl-result-accuracy">0%</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">時間</span>
-            <span class="result-stat-value" id="rl-result-time">00:00</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">ミス数</span>
-            <span class="result-stat-value" id="rl-result-miss">0</span>
+      <!-- RL画面1: パスワード入力（RUNTEQ共通） -->
+      <div id="screen-ruby-password" class="screen">
+        <div class="rl-password-container">
+          <div class="rl-logo">RUNTEQ</div>
+          <h2>RUNTEQ 学習モード</h2>
+          <p class="rl-password-desc">
+            RUNTEQ生徒専用です。パスワードを入力してください。
+          </p>
+          <div class="rl-password-form">
+            <input
+              type="password"
+              id="ruby-password-input"
+              class="rl-password-input"
+              placeholder="パスワード"
+            />
+            <span id="ruby-password-error" class="rl-password-error"></span>
+            <button id="ruby-password-submit" class="btn btn-primary rl-btn">
+              ログイン
+            </button>
+            <button id="ruby-password-back" class="btn btn-secondary rl-btn">
+              戻る
+            </button>
           </div>
         </div>
+      </div>
 
-        <!-- 解説 -->
-        <div class="rl-complete-explanation-box">
-          <h3>解説</h3>
-          <p id="rl-complete-explanation"></p>
+      <!-- RL画面1.5: コース選択 -->
+      <div id="screen-runteq-courses" class="screen">
+        <div class="rl-chapters-container">
+          <h2 class="rl-section-title">RUNTEQ 学習コース</h2>
+          <p class="rl-section-desc">学習するコースを選択してください</p>
+          <div id="runteq-course-list" class="rl-chapter-list">
+            <button
+              class="rl-chapter-btn runteq-course-btn"
+              id="btn-course-ruby"
+            >
+              <span class="rl-chapter-id" style="color: #cc0033">Rb</span>
+              <span class="rl-chapter-title">Ruby入門</span>
+              <span class="rl-chapter-count">全11章・28ステップ</span>
+            </button>
+            <button
+              class="rl-chapter-btn runteq-course-btn"
+              id="btn-course-git"
+            >
+              <span class="rl-chapter-id" style="color: #f05033">Git</span>
+              <span class="rl-chapter-title">Git / GitHub 演習</span>
+              <span class="rl-chapter-count">全5章・17ステップ</span>
+            </button>
+            <button
+              class="rl-chapter-btn runteq-course-btn"
+              id="btn-course-rails"
+            >
+              <span class="rl-chapter-id" style="color: #cc0000">Rails</span>
+              <span class="rl-chapter-title">Rails入門</span>
+              <span class="rl-chapter-count"
+                >全11章・27ステップ（前半・後半）</span
+              >
+            </button>
+            <button
+              class="rl-chapter-btn runteq-course-btn"
+              id="btn-course-ai-levels"
+            >
+              <span class="rl-chapter-id" style="color: #e74c3c">🎯</span>
+              <span class="rl-chapter-title">AI時代のRuby学習マップ</span>
+              <span class="rl-chapter-count">全11章・5段階レベル学習</span>
+            </button>
+          </div>
+          <button id="runteq-course-back" class="btn btn-secondary rl-btn-back">
+            モード選択に戻る
+          </button>
         </div>
+      </div>
 
-        <!-- 実行出力 -->
-        <div class="rl-output-section" id="rl-output-section">
-          <h3>実行結果（期待される出力）</h3>
-          <pre id="rl-expected-output" class="rl-output-pre"></pre>
+      <!-- RL画面2: 章選択（Ruby） -->
+      <div id="screen-ruby-chapters" class="screen">
+        <div class="rl-chapters-container">
+          <h2 class="rl-section-title">RUNTEQ Ruby入門</h2>
+          <p class="rl-section-desc">学習する章を選択してください</p>
+          <div id="ruby-chapter-list" class="rl-chapter-list"></div>
+          <button id="ruby-chapter-back" class="btn btn-secondary rl-btn-back">
+            モード選択に戻る
+          </button>
         </div>
+      </div>
 
-        <!-- コピーセクション -->
-        <div class="rl-copy-section" id="rl-copy-section">
-          <h3>ターミナルで実行する</h3>
-          <div class="rl-copy-row">
-            <div class="rl-copy-item">
-              <span class="rl-copy-label">1. ファイル作成コマンド</span>
-              <code id="rl-file-cmd-text" class="rl-cmd-text"></code>
-              <button id="rl-copy-file-cmd" class="btn btn-copy">COPY</button>
+      <!-- RL画面3: ステップ選択 -->
+      <div id="screen-ruby-steps" class="screen">
+        <div class="rl-steps-container">
+          <h2 id="ruby-step-title" class="rl-section-title"></h2>
+          <div id="ruby-step-list" class="rl-step-list"></div>
+          <button id="ruby-step-back" class="btn btn-secondary rl-btn-back">
+            章選択に戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- RL画面4: タイピング中 -->
+      <div id="screen-ruby-typing" class="screen">
+        <div class="rl-typing-container">
+          <!-- ステータスバー -->
+          <div class="rl-status-bar">
+            <div class="status-item">
+              <span class="status-label">タイマー</span>
+              <span class="status-value" id="rl-timer">00:00</span>
             </div>
-            <div class="rl-copy-item">
-              <span class="rl-copy-label">2. 実行コマンド</span>
-              <code id="rl-run-cmd-text" class="rl-cmd-text"></code>
-              <button id="rl-copy-run-cmd" class="btn btn-copy">COPY</button>
+            <div class="status-item" id="rl-step-info-wrap">
+              <span class="status-value" id="rl-step-info"></span>
             </div>
-          </div>
-        </div>
-
-        <!-- ナビゲーション -->
-        <div class="rl-complete-actions">
-          <button class="btn btn-primary" id="rl-next-step">次のステップ</button>
-          <button class="btn btn-secondary" id="rl-back-to-steps">ステップ一覧</button>
-          <button class="btn btn-secondary" id="rl-back-to-chapters">章選択に戻る</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== RUNTEQ Git演習 学習モード ===== -->
-
-    <!-- GL画面2: 章選択 -->
-    <div id="screen-git-chapters" class="screen">
-      <div class="rl-chapters-container">
-        <h2 class="rl-section-title">RUNTEQ Git演習</h2>
-        <p class="rl-section-desc">学習する章を選択してください</p>
-        <div id="git-chapter-list" class="rl-chapter-list"></div>
-        <button id="git-chapter-back" class="btn btn-secondary rl-btn-back">モード選択に戻る</button>
-      </div>
-    </div>
-
-    <!-- GL画面3: ステップ選択 -->
-    <div id="screen-git-steps" class="screen">
-      <div class="rl-steps-container">
-        <h2 id="git-step-title" class="rl-section-title"></h2>
-        <div id="git-step-list" class="rl-step-list"></div>
-        <button id="git-step-back" class="btn btn-secondary rl-btn-back">章選択に戻る</button>
-      </div>
-    </div>
-
-    <!-- GL画面4: タイピング中 -->
-    <div id="screen-git-typing" class="screen">
-      <div class="rl-typing-container">
-        <!-- ステータスバー -->
-        <div class="rl-status-bar">
-          <div class="status-item">
-            <span class="status-label">タイマー</span>
-            <span class="status-value" id="gl-timer">00:00</span>
-          </div>
-          <div class="status-item" id="gl-step-info-wrap">
-            <span class="status-value" id="gl-step-info"></span>
-          </div>
-          <div class="status-item">
-            <span class="status-label">WPM</span>
-            <span class="status-value" id="gl-wpm">0</span>
-          </div>
-          <div class="status-item">
-            <span class="status-label">正確率</span>
-            <span class="status-value" id="gl-accuracy">100%</span>
-          </div>
-        </div>
-
-        <!-- 解説エリア -->
-        <div class="rl-explanation-bar">
-          <span id="gl-explanation"></span>
-        </div>
-
-        <!-- コードエリア -->
-        <div class="rl-code-area" id="gl-code-area">
-          <div class="rl-line-numbers" id="gl-line-numbers"></div>
-          <div class="rl-code-text" id="gl-code-text"></div>
-        </div>
-
-        <!-- IME入力用の隠しテキストエリア -->
-        <textarea id="gl-ime-input" class="rl-ime-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-
-        <div class="rl-typing-hint">
-          改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
-          <button id="gl-copy-skip" class="btn btn-copy gl-copy-skip" title="タイピングせずにコマンドをコピー">📋 COPY</button>
-        </div>
-
-        <!-- 指ガイド -->
-        <div class="finger-guide" id="gl-finger-guide">
-          <span id="gl-finger-hand"></span> <span id="gl-finger-name"></span>
-        </div>
-
-        <!-- キーボード -->
-        <div id="gl-keyboard" class="keyboard-wrapper"></div>
-
-        <!-- 手のイラスト -->
-        <div id="gl-hand-guide"></div>
-      </div>
-    </div>
-
-    <!-- GL画面5: 完了画面 -->
-    <div id="screen-git-complete" class="screen">
-      <div class="rl-complete-container">
-        <h2 class="rl-complete-title">Step Complete!</h2>
-
-        <!-- 結果統計 -->
-        <div class="rl-result-stats" id="gl-result-stats">
-          <div class="result-stat">
-            <span class="result-stat-label">WPM</span>
-            <span class="result-stat-value" id="gl-result-wpm">0</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">正確率</span>
-            <span class="result-stat-value" id="gl-result-accuracy">0%</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">時間</span>
-            <span class="result-stat-value" id="gl-result-time">00:00</span>
-          </div>
-          <div class="result-stat">
-            <span class="result-stat-label">ミス数</span>
-            <span class="result-stat-value" id="gl-result-miss">0</span>
-          </div>
-        </div>
-
-        <!-- 解説 -->
-        <div class="rl-complete-explanation-box">
-          <h3>解説</h3>
-          <p id="gl-complete-explanation"></p>
-        </div>
-
-        <!-- 実行出力 -->
-        <div class="rl-output-section" id="gl-output-section">
-          <h3>実行結果（期待される出力）</h3>
-          <pre id="gl-expected-output" class="rl-output-pre"></pre>
-        </div>
-
-        <!-- コピーセクション -->
-        <div class="rl-copy-section">
-          <h3>ターミナルに貼り付けて実行</h3>
-          <div class="rl-copy-row">
-            <div class="rl-copy-item gl-copy-item-full">
-              <pre id="gl-cmd-text" class="rl-cmd-text gl-cmd-pre"></pre>
-              <button id="gl-copy-cmd" class="btn btn-copy">COPY</button>
+            <div class="status-item">
+              <span class="status-label">WPM</span>
+              <span class="status-value" id="rl-wpm">0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">正確率</span>
+              <span class="status-value" id="rl-accuracy">100%</span>
             </div>
           </div>
-        </div>
 
-        <!-- ナビゲーション -->
-        <div class="rl-complete-actions">
-          <button class="btn btn-primary" id="gl-next-step">次のステップ</button>
-          <button class="btn btn-secondary" id="gl-back-to-steps">ステップ一覧</button>
-          <button class="btn btn-secondary" id="gl-back-to-chapters">章選択に戻る</button>
+          <!-- 解説エリア -->
+          <div class="rl-explanation-bar">
+            <span id="rl-explanation"></span>
+          </div>
+
+          <!-- コードエリア -->
+          <div class="rl-code-area" id="rl-code-area">
+            <div class="rl-line-numbers" id="rl-line-numbers"></div>
+            <div class="rl-code-text" id="rl-code-text"></div>
+          </div>
+
+          <!-- IME入力用の隠しテキストエリア -->
+          <textarea
+            id="rl-ime-input"
+            class="rl-ime-input"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          ></textarea>
+
+          <div class="rl-typing-hint">
+            改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+          </div>
+
+          <!-- 指ガイド -->
+          <div class="finger-guide" id="rl-finger-guide">
+            <span id="rl-finger-hand"></span> <span id="rl-finger-name"></span>
+          </div>
+
+          <!-- キーボード -->
+          <div id="rl-keyboard" class="keyboard-wrapper"></div>
+
+          <!-- 手のイラスト -->
+          <div id="rl-hand-guide"></div>
         </div>
       </div>
-    </div>
 
-    <!-- ===== 画面4: 結果画面 ===== -->
-    <div id="screen-result" class="screen">
-      <div class="result-container">
-        <h2 class="result-title">結果</h2>
-        <div class="result-level" id="result-level"></div>
-        <div class="result-score" id="result-score"></div>
-        <div class="result-stats">
-          <div class="result-stat">
-            <span class="result-stat-label">WPM</span>
-            <span class="result-stat-value" id="result-wpm">0</span>
+      <!-- RL画面5: 完了画面 -->
+      <div id="screen-ruby-complete" class="screen">
+        <div class="rl-complete-container">
+          <h2 class="rl-complete-title">Step Complete!</h2>
+
+          <!-- 結果統計 -->
+          <div class="rl-result-stats" id="rl-result-stats">
+            <div class="result-stat">
+              <span class="result-stat-label">WPM</span>
+              <span class="result-stat-value" id="rl-result-wpm">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">正確率</span>
+              <span class="result-stat-value" id="rl-result-accuracy">0%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">時間</span>
+              <span class="result-stat-value" id="rl-result-time">00:00</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">ミス数</span>
+              <span class="result-stat-value" id="rl-result-miss">0</span>
+            </div>
           </div>
-          <div class="result-stat">
-            <span class="result-stat-label">正確率</span>
-            <span class="result-stat-value" id="result-accuracy">0%</span>
+
+          <!-- 解説 -->
+          <div class="rl-complete-explanation-box">
+            <h3>解説</h3>
+            <p id="rl-complete-explanation"></p>
           </div>
-          <div class="result-stat">
-            <span class="result-stat-label">時間</span>
-            <span class="result-stat-value" id="result-time">00:00</span>
+
+          <!-- 実行出力 -->
+          <div class="rl-output-section" id="rl-output-section">
+            <h3>実行結果（期待される出力）</h3>
+            <pre id="rl-expected-output" class="rl-output-pre"></pre>
           </div>
-          <div class="result-stat">
-            <span class="result-stat-label">入力文字数</span>
-            <span class="result-stat-value" id="result-chars">0</span>
+
+          <!-- コピーセクション -->
+          <div class="rl-copy-section" id="rl-copy-section">
+            <h3>ターミナルで実行する</h3>
+            <div class="rl-copy-row">
+              <div class="rl-copy-item">
+                <span class="rl-copy-label">1. ファイル作成コマンド</span>
+                <code id="rl-file-cmd-text" class="rl-cmd-text"></code>
+                <button id="rl-copy-file-cmd" class="btn btn-copy">COPY</button>
+              </div>
+              <div class="rl-copy-item">
+                <span class="rl-copy-label">2. 実行コマンド</span>
+                <code id="rl-run-cmd-text" class="rl-cmd-text"></code>
+                <button id="rl-copy-run-cmd" class="btn btn-copy">COPY</button>
+              </div>
+            </div>
           </div>
-          <div class="result-stat">
-            <span class="result-stat-label">ミス数</span>
-            <span class="result-stat-value" id="result-miss">0</span>
+
+          <!-- ナビゲーション -->
+          <div class="rl-complete-actions">
+            <button class="btn btn-primary" id="rl-next-step">
+              次のステップ
+            </button>
+            <button class="btn btn-secondary" id="rl-back-to-steps">
+              ステップ一覧
+            </button>
+            <button class="btn btn-secondary" id="rl-back-to-chapters">
+              章選択に戻る
+            </button>
           </div>
-        </div>
-        <div class="result-miss-chars" id="result-miss-chars">
-          <h3>ミスした文字</h3>
-          <div id="miss-char-list"></div>
-        </div>
-        <div class="result-actions">
-          <button class="btn btn-primary" id="btn-retry">もう一度</button>
-          <button class="btn btn-secondary" id="btn-back">モード選択に戻る</button>
         </div>
       </div>
-    </div>
-  </main>
 
-  <script src="js/symbols.js"></script>
-  <script src="js/keyboard.js"></script>
-  <script src="js/hands.js"></script>
-  <script src="js/snippets.js"></script>
-  <script src="js/ruby-learning-data.js?v=6"></script>
-  <script src="js/ruby-learning.js?v=6"></script>
-  <script src="js/git-learning-data.js?v=1"></script>
-  <script src="js/git-learning.js?v=1"></script>
-  <script src="js/dashboard.js?v=6"></script>
-  <script src="js/app.js?v=7"></script>
-</body>
+      <!-- ===== RUNTEQ Git演習 学習モード ===== -->
+
+      <!-- GL画面2: 章選択 -->
+      <div id="screen-git-chapters" class="screen">
+        <div class="rl-chapters-container">
+          <h2 class="rl-section-title">RUNTEQ Git演習</h2>
+          <p class="rl-section-desc">学習する章を選択してください</p>
+          <div id="git-chapter-list" class="rl-chapter-list"></div>
+          <button id="git-chapter-back" class="btn btn-secondary rl-btn-back">
+            モード選択に戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- GL画面3: ステップ選択 -->
+      <div id="screen-git-steps" class="screen">
+        <div class="rl-steps-container">
+          <h2 id="git-step-title" class="rl-section-title"></h2>
+          <div id="git-step-list" class="rl-step-list"></div>
+          <button id="git-step-back" class="btn btn-secondary rl-btn-back">
+            章選択に戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- GL画面4: タイピング中 -->
+      <div id="screen-git-typing" class="screen">
+        <div class="rl-typing-container">
+          <!-- ステータスバー -->
+          <div class="rl-status-bar">
+            <div class="status-item">
+              <span class="status-label">タイマー</span>
+              <span class="status-value" id="gl-timer">00:00</span>
+            </div>
+            <div class="status-item" id="gl-step-info-wrap">
+              <span class="status-value" id="gl-step-info"></span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">WPM</span>
+              <span class="status-value" id="gl-wpm">0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">正確率</span>
+              <span class="status-value" id="gl-accuracy">100%</span>
+            </div>
+          </div>
+
+          <!-- 解説エリア -->
+          <div class="rl-explanation-bar">
+            <span id="gl-explanation"></span>
+          </div>
+
+          <!-- コードエリア -->
+          <div class="rl-code-area" id="gl-code-area">
+            <div class="rl-line-numbers" id="gl-line-numbers"></div>
+            <div class="rl-code-text" id="gl-code-text"></div>
+          </div>
+
+          <!-- IME入力用の隠しテキストエリア -->
+          <textarea
+            id="gl-ime-input"
+            class="rl-ime-input"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          ></textarea>
+
+          <div class="rl-typing-hint">
+            改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+            <button
+              id="gl-copy-skip"
+              class="btn btn-copy gl-copy-skip"
+              title="タイピングせずにコマンドをコピー"
+            >
+              📋 COPY
+            </button>
+          </div>
+
+          <!-- 指ガイド -->
+          <div class="finger-guide" id="gl-finger-guide">
+            <span id="gl-finger-hand"></span> <span id="gl-finger-name"></span>
+          </div>
+
+          <!-- キーボード -->
+          <div id="gl-keyboard" class="keyboard-wrapper"></div>
+
+          <!-- 手のイラスト -->
+          <div id="gl-hand-guide"></div>
+        </div>
+      </div>
+
+      <!-- GL画面5: 完了画面 -->
+      <div id="screen-git-complete" class="screen">
+        <div class="rl-complete-container">
+          <h2 class="rl-complete-title">Step Complete!</h2>
+
+          <!-- 結果統計 -->
+          <div class="rl-result-stats" id="gl-result-stats">
+            <div class="result-stat">
+              <span class="result-stat-label">WPM</span>
+              <span class="result-stat-value" id="gl-result-wpm">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">正確率</span>
+              <span class="result-stat-value" id="gl-result-accuracy">0%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">時間</span>
+              <span class="result-stat-value" id="gl-result-time">00:00</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">ミス数</span>
+              <span class="result-stat-value" id="gl-result-miss">0</span>
+            </div>
+          </div>
+
+          <!-- 解説 -->
+          <div class="rl-complete-explanation-box">
+            <h3>解説</h3>
+            <p id="gl-complete-explanation"></p>
+          </div>
+
+          <!-- 実行出力 -->
+          <div class="rl-output-section" id="gl-output-section">
+            <h3>実行結果（期待される出力）</h3>
+            <pre id="gl-expected-output" class="rl-output-pre"></pre>
+          </div>
+
+          <!-- コピーセクション -->
+          <div class="rl-copy-section">
+            <h3>ターミナルに貼り付けて実行</h3>
+            <div class="rl-copy-row">
+              <div class="rl-copy-item gl-copy-item-full">
+                <pre id="gl-cmd-text" class="rl-cmd-text gl-cmd-pre"></pre>
+                <button id="gl-copy-cmd" class="btn btn-copy">COPY</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ナビゲーション -->
+          <div class="rl-complete-actions">
+            <button class="btn btn-primary" id="gl-next-step">
+              次のステップ
+            </button>
+            <button class="btn btn-secondary" id="gl-back-to-steps">
+              ステップ一覧
+            </button>
+            <button class="btn btn-secondary" id="gl-back-to-chapters">
+              章選択に戻る
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== RUNTEQ Rails入門 学習モード ===== -->
+
+      <!-- Rails画面2: 章選択 -->
+      <div id="screen-rails-chapters" class="screen">
+        <div class="rl-chapters-container">
+          <h2 class="rl-section-title">RUNTEQ Rails入門</h2>
+          <p class="rl-section-desc">学習する章を選択してください</p>
+          <a
+            href="https://rails-study-app.vercel.app/"
+            target="_blank"
+            class="rails-study-link"
+            >Rails学習アプリで復習する →</a
+          >
+          <div id="rails-chapter-list" class="rl-chapter-list"></div>
+          <button id="rails-chapter-back" class="btn btn-secondary rl-btn-back">
+            モード選択に戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- Rails画面3: ステップ選択 -->
+      <div id="screen-rails-steps" class="screen">
+        <div class="rl-steps-container">
+          <h2 id="rails-step-title" class="rl-section-title"></h2>
+          <div id="rails-step-list" class="rl-step-list"></div>
+          <button id="rails-step-back" class="btn btn-secondary rl-btn-back">
+            章選択に戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- Rails画面4: タイピング中 -->
+      <div id="screen-rails-typing" class="screen">
+        <div class="rl-typing-container">
+          <!-- ステータスバー -->
+          <div class="rl-status-bar">
+            <div class="status-item">
+              <span class="status-label">タイマー</span>
+              <span class="status-value" id="ra-timer">00:00</span>
+            </div>
+            <div class="status-item" id="ra-step-info-wrap">
+              <span class="status-value" id="ra-step-info"></span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">WPM</span>
+              <span class="status-value" id="ra-wpm">0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">正確率</span>
+              <span class="status-value" id="ra-accuracy">100%</span>
+            </div>
+          </div>
+
+          <!-- 解説エリア -->
+          <div class="rl-explanation-bar">
+            <span id="ra-explanation"></span>
+          </div>
+
+          <!-- コードエリア -->
+          <div class="rl-code-area" id="ra-code-area">
+            <div class="rl-line-numbers" id="ra-line-numbers"></div>
+            <div class="rl-code-text" id="ra-code-text"></div>
+          </div>
+
+          <!-- IME入力用の隠しテキストエリア -->
+          <textarea
+            id="ra-ime-input"
+            class="rl-ime-input"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          ></textarea>
+
+          <div class="rl-typing-hint">
+            改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+          </div>
+
+          <!-- 指ガイド -->
+          <div class="finger-guide" id="ra-finger-guide">
+            <span id="ra-finger-hand"></span> <span id="ra-finger-name"></span>
+          </div>
+
+          <!-- キーボード -->
+          <div id="ra-keyboard" class="keyboard-wrapper"></div>
+
+          <!-- 手のイラスト -->
+          <div id="ra-hand-guide"></div>
+        </div>
+
+        <!-- ショートカット: Rails学習アプリへのリンク（右サイド固定） -->
+        <a
+          href="https://rails-study-app.vercel.app/"
+          target="_blank"
+          class="rails-shortcut-fab"
+          title="Rails学習アプリで復習"
+        >
+          <span class="rails-shortcut-icon">📖</span>
+          <span class="rails-shortcut-label">学習アプリ</span>
+        </a>
+      </div>
+
+      <!-- Rails画面5: 完了画面 -->
+      <div id="screen-rails-complete" class="screen">
+        <div class="rl-complete-container">
+          <h2 class="rl-complete-title">Step Complete!</h2>
+
+          <!-- 結果統計 -->
+          <div class="rl-result-stats" id="ra-result-stats">
+            <div class="result-stat">
+              <span class="result-stat-label">WPM</span>
+              <span class="result-stat-value" id="ra-result-wpm">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">正確率</span>
+              <span class="result-stat-value" id="ra-result-accuracy">0%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">時間</span>
+              <span class="result-stat-value" id="ra-result-time">00:00</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">ミス数</span>
+              <span class="result-stat-value" id="ra-result-miss">0</span>
+            </div>
+          </div>
+
+          <!-- 解説 -->
+          <div class="rl-complete-explanation-box">
+            <h3>解説</h3>
+            <p id="ra-complete-explanation"></p>
+          </div>
+
+          <!-- Rails学習アプリへのリンク -->
+          <div class="rails-study-link-box">
+            <a
+              href="https://rails-study-app.vercel.app/"
+              target="_blank"
+              class="rails-study-link-btn"
+            >
+              📖 Rails学習アプリで詳しく復習する
+            </a>
+          </div>
+
+          <!-- ナビゲーション -->
+          <div class="rl-complete-actions">
+            <button class="btn btn-primary" id="ra-next-step">
+              次のステップ
+            </button>
+            <button class="btn btn-secondary" id="ra-back-to-steps">
+              ステップ一覧
+            </button>
+            <button class="btn btn-secondary" id="ra-back-to-chapters">
+              章選択に戻る
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 5段階レベル学習モード ===== -->
+
+      <!-- LV画面1: 章選択 -->
+      <div id="screen-levels-select" class="screen">
+        <div class="rl-chapters-container">
+          <h2 class="rl-section-title">🎯 5段階レベル学習</h2>
+          <p class="rl-section-desc">
+            Lv5（重要）からLv1（補足）まで段階的にタイピング練習
+          </p>
+          <div id="levels-chapter-list" class="rl-chapter-list"></div>
+          <button id="levels-select-back" class="btn btn-secondary rl-btn-back">
+            ダッシュボードに戻る
+          </button>
+        </div>
+      </div>
+
+      <!-- LV画面2: タイピング画面（左右分割） -->
+      <div id="screen-levels-typing" class="screen">
+        <div class="lv-split-layout">
+          <!-- 左側: タイピングエリア 60% -->
+          <div class="lv-left-panel">
+            <!-- ステータスバー -->
+            <div class="rl-status-bar">
+              <div class="status-item">
+                <span class="status-label">タイマー</span>
+                <span class="status-value" id="lv-timer">00:00</span>
+              </div>
+              <div class="status-item" id="lv-step-info-wrap">
+                <span
+                  class="status-value"
+                  id="lv-step-info"
+                  style="font-size: 12px"
+                ></span>
+              </div>
+              <div class="status-item">
+                <span class="status-label">WPM</span>
+                <span class="status-value" id="lv-wpm">0</span>
+              </div>
+              <div class="status-item">
+                <span class="status-label">正確率</span>
+                <span class="status-value" id="lv-accuracy">100%</span>
+              </div>
+            </div>
+
+            <!-- レベルバッジ -->
+            <div class="lv-level-header">
+              <span class="lv-level-badge" id="lv-level-badge">Lv5</span>
+              <span class="lv-level-name" id="lv-level-name"
+                >Lv5 深く理解する</span
+              >
+              <span class="lv-level-desc" id="lv-level-desc"
+                >AIに「何をするか」指示を出す側</span
+              >
+            </div>
+
+            <!-- 解説エリア -->
+            <div class="rl-explanation-bar">
+              <span id="lv-explanation"></span>
+            </div>
+
+            <!-- コードエリア -->
+            <div class="rl-code-area" id="lv-code-area">
+              <div class="rl-line-numbers" id="lv-line-numbers"></div>
+              <div class="rl-code-text" id="lv-code-text"></div>
+            </div>
+
+            <!-- IME入力用の隠しテキストエリア -->
+            <textarea
+              id="lv-ime-input"
+              class="rl-ime-input"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            ></textarea>
+
+            <!-- 進捗ドット -->
+            <div class="lv-progress-bar" id="lv-progress"></div>
+
+            <div class="rl-typing-hint">
+              改行は <kbd>Enter</kbd>、中断は <kbd>Esc</kbd>
+            </div>
+
+            <!-- 指ガイド -->
+            <div class="finger-guide" id="lv-finger-guide">
+              <span id="lv-finger-hand"></span>
+              <span id="lv-finger-name"></span>
+            </div>
+
+            <!-- キーボード -->
+            <div id="lv-keyboard" class="keyboard-wrapper"></div>
+
+            <!-- 手のイラスト -->
+            <div id="lv-hand-guide"></div>
+          </div>
+
+          <!-- 右側: インフォグラフィック 40% -->
+          <div class="lv-right-panel">
+            <div class="lv-image-level" id="lv-image-level">
+              現在: Lv5 深く理解する
+            </div>
+            <img
+              id="lv-infographic"
+              class="lv-infographic-img"
+              src="img/ch6_hash_levels.png"
+              alt="インフォグラフィック"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- LV画面3: 完了画面 -->
+      <div id="screen-levels-complete" class="screen">
+        <div class="rl-complete-container">
+          <h2 class="rl-complete-title" id="lv-complete-title">
+            全レベル完了!
+          </h2>
+
+          <!-- 結果統計 -->
+          <div class="rl-result-stats">
+            <div class="result-stat">
+              <span class="result-stat-label">WPM</span>
+              <span class="result-stat-value" id="lv-result-wpm">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">正確率</span>
+              <span class="result-stat-value" id="lv-result-accuracy">0%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">時間</span>
+              <span class="result-stat-value" id="lv-result-time">00:00</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">ミス数</span>
+              <span class="result-stat-value" id="lv-result-miss">0</span>
+            </div>
+          </div>
+
+          <!-- レベルサマリー -->
+          <div class="lv-complete-summary" id="lv-complete-summary"></div>
+
+          <!-- ナビゲーション -->
+          <div class="rl-complete-actions">
+            <button class="btn btn-primary" id="lv-complete-back">
+              もう一度挑戦
+            </button>
+            <button class="btn btn-secondary" id="lv-complete-dashboard">
+              ダッシュボードに戻る
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 画面4: 結果画面 ===== -->
+      <div id="screen-result" class="screen">
+        <div class="result-container">
+          <h2 class="result-title">結果</h2>
+          <div class="result-level" id="result-level"></div>
+          <div class="result-score" id="result-score"></div>
+          <div class="result-stats">
+            <div class="result-stat">
+              <span class="result-stat-label">WPM</span>
+              <span class="result-stat-value" id="result-wpm">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">正確率</span>
+              <span class="result-stat-value" id="result-accuracy">0%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">時間</span>
+              <span class="result-stat-value" id="result-time">00:00</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">入力文字数</span>
+              <span class="result-stat-value" id="result-chars">0</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-stat-label">ミス数</span>
+              <span class="result-stat-value" id="result-miss">0</span>
+            </div>
+          </div>
+          <div class="result-miss-chars" id="result-miss-chars">
+            <h3>ミスした文字</h3>
+            <div id="miss-char-list"></div>
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-primary" id="btn-retry">もう一度</button>
+            <button class="btn btn-secondary" id="btn-back">
+              モード選択に戻る
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/symbols.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/hands.js"></script>
+    <script src="js/snippets.js"></script>
+    <script src="js/ruby-learning-data.js?v=6"></script>
+    <script src="js/ruby-learning.js?v=6"></script>
+    <script src="js/git-learning-data.js?v=1"></script>
+    <script src="js/git-learning.js?v=1"></script>
+    <script src="js/rails-learning-data.js?v=1"></script>
+    <script src="js/rails-learning.js?v=1"></script>
+    <script src="js/ruby-levels-data.js?v=1"></script>
+    <script src="js/ruby-levels.js?v=1"></script>
+    <script src="js/dashboard.js?v=6"></script>
+    <script src="js/app.js?v=7"></script>
+  </body>
 </html>
