@@ -1882,3 +1882,124 @@ body {
     max-width: 300px;
   }
 }
+
+/* ===== Rails基礎原則 インフォグラフィック & 解説 ===== */
+.rp-info-block {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #fff5f5, #fff9f0);
+  border: 1px solid #f0d0c0;
+  border-radius: 12px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.rp-pyramid-img-wrap {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.rp-pyramid-img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.rp-pyramid-img:hover {
+  transform: scale(1.02);
+}
+
+.rp-pyramid-img.rp-expanded {
+  max-height: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 9999;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+
+.rp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9998;
+}
+
+.rp-essence-box {
+  text-align: left;
+}
+
+.rp-essence-title {
+  font-size: 1.1rem;
+  color: #c0392b;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.rp-essence-core {
+  background: #fff;
+  border-left: 4px solid #e74c3c;
+  padding: 12px 16px;
+  margin: 0 0 12px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.rp-essence-detail {
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.rp-essence-detail p {
+  margin: 0 0 6px;
+}
+
+.rp-essence-detail ul {
+  margin: 0 0 8px;
+  padding-left: 20px;
+}
+
+.rp-essence-detail li {
+  margin-bottom: 4px;
+}
+
+.rp-essence-sub {
+  color: #888;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.rp-essence-checklist {
+  background: #fff;
+  border: 1px solid #e8e0d8;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.rp-essence-checklist h4 {
+  font-size: 0.9rem;
+  color: #c0392b;
+  margin: 0 0 8px;
+}
+
+.rp-essence-checklist ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.8;
+}

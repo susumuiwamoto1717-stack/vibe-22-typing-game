@@ -712,11 +712,21 @@
         }
       });
     }
+    const btnCourseRailsPrinciples = document.getElementById(
+      "btn-course-rails-principles",
+    );
+    if (btnCourseRailsPrinciples) {
+      btnCourseRailsPrinciples.addEventListener("click", () => {
+        if (window.RailsPrinciples && window.RailsPrinciples.showChapters) {
+          window.RailsPrinciples.showChapters();
+        }
+      });
+    }
     const btnCourseAiLevels = document.getElementById("btn-course-ai-levels");
     if (btnCourseAiLevels) {
       btnCourseAiLevels.addEventListener("click", () => {
-        if (window.RubyLevels && window.RubyLevels.showSelect) {
-          window.RubyLevels.showSelect();
+        if (window.RubyLevels && window.RubyLevels.show) {
+          window.RubyLevels.show();
         }
       });
     }

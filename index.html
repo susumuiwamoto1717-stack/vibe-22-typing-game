@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Yomogi&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=6" />
+    <link rel="stylesheet" href="css/style.css?v=7" />
   </head>
   <body>
     <!-- ヘッダー -->
@@ -114,10 +114,15 @@
               <span class="mode-name">Ruby</span>
               <span class="mode-desc">Ruby / Rails構文の練習</span>
             </button>
+            <button class="mode-btn" data-mode="rails_quest">
+              <span class="mode-icon">⚔️</span>
+              <span class="mode-name">Rails Quest</span>
+              <span class="mode-desc">冒険者ギルドで学ぶRuby/Rails基礎</span>
+            </button>
             <button class="mode-btn rl-mode-btn" id="btn-runteq-learning">
               <span class="mode-icon rl-icon">RUNTEQ</span>
               <span class="mode-name">RUNTEQ学習</span>
-              <span class="mode-desc">カリキュラムに沿った学習モード</span>
+              <span class="mode-desc">カリキュラ���に���った学習モード</span>
             </button>
             <button class="mode-btn" data-mode="mix">
               <span class="mode-icon">MIX</span>
@@ -254,6 +259,14 @@
               <span class="rl-chapter-id" style="color: #e74c3c">🎯</span>
               <span class="rl-chapter-title">AI時代のRuby学習マップ</span>
               <span class="rl-chapter-count">全11章・5段階レベル学習</span>
+            </button>
+            <button
+              class="rl-chapter-btn runteq-course-btn"
+              id="btn-course-rails-principles"
+            >
+              <span class="rl-chapter-id" style="color: #e74c3c">🏗️</span>
+              <span class="rl-chapter-title">Rails基礎原則</span>
+              <span class="rl-chapter-count">全8章・40ステップ</span>
             </button>
           </div>
           <button id="runteq-course-back" class="btn btn-secondary rl-btn-back">
@@ -933,6 +946,8 @@
     <script src="js/git-learning.js?v=1"></script>
     <script src="js/rails-learning-data.js?v=1"></script>
     <script src="js/rails-learning.js?v=1"></script>
+    <script src="js/rails-principles-data.js?v=1"></script>
+    <script src="js/rails-principles.js?v=1"></script>
     <script src="js/ruby-levels-data.js?v=1"></script>
     <script src="js/ruby-levels.js?v=1"></script>
     <script src="js/dashboard.js?v=6"></script>

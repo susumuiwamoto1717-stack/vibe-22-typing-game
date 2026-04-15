@@ -99,7 +99,8 @@
       html_css: "HTML / CSS",
       javascript: "JavaScript",
       ruby: "Ruby",
-      mix: "ミックス",
+      rails_quest: "Rails Quest",
+      mix: "ミッ��ス",
     };
 
     els.readyModeName.textContent = modeNames[mode] || mode;
@@ -556,6 +557,11 @@
     // Rails入門モード初期化
     if (window.RailsLearning) {
       window.RailsLearning.init();
+    }
+
+    // Rails基礎原則モード初期化
+    if (window.RailsPrinciples) {
+      window.RailsPrinciples.init();
     }
 
     // 5段階レベル学習モード初期化
